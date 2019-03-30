@@ -21,4 +21,5 @@ deploy:
     - docker stop shopping_app || true
     - docker rm shopping_app || true
     - docker load --input shopping_app.tar
+    - sudo netstat -ntlp | grep LISTEN
     - docker run -d -p 80:3000 -e NODE_ENV='PROD' --name shopping_app shopping_app
