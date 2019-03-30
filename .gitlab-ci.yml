@@ -1,0 +1,17 @@
+stages:
+  - build
+  - deploy
+
+build_docker:
+  stage: build
+  tags:
+    - shell
+  script:
+    - docker build . -t shopping_app
+
+deploy:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - pwd
