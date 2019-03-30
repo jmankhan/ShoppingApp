@@ -15,4 +15,5 @@ deploy:
     - shell
   script:
     - docker save --output shopping_app.tar shopping_app
+    - ls
     - scp -i $perm shopping_app.tar ubuntu@34.235.171.4
