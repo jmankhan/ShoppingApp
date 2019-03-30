@@ -18,6 +18,7 @@ deploy:
     - ls
     - scp -i $perm shopping_app.tar ubuntu@34.235.171.4:./
     - ssh -i $perm ubuntu@34.235.171.4
+    - docker stop shopping_app || true
+    - docker rm shopping_app || true
     - docker load --input shopping_app.tar
-
-
+    - docker run -d -p 80:3000 -e NODE_ENV='PROD' --name shopping_app shopping_app
