@@ -18,4 +18,6 @@ deploy:
     - ls
     - scp -i $perm shopping_app.tar ubuntu@34.235.171.4:./
     - ssh -i $perm ubuntu@34.235.171.4
+    - pwd
+    - ls
     - ./run.sh
