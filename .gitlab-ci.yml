@@ -1,0 +1,20 @@
+stages:
+  - build
+  - deploy
+
+build_docker:
+  stage: build
+  tags:
+    - shell
+  script:
+    - docker build . -t shopping_app
+
+deploy:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - docker save --output shopping_app.tar shopping_app
+    - ls
+    - scp -i $perm shopping_app.tar ubuntu@34.235.171.4:./
+    - ssh -i $perm ubuntu@34.235.171.4 './run.sh'
