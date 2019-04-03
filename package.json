@@ -1,23 +1,27 @@
 {
-  "name": "shoppingapp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jmankhan/ShoppingApp.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jmankhan/ShoppingApp/issues"
-  },
-  "homepage": "https://github.com/jmankhan/ShoppingApp#readme",
+  "name": "shopping",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "express": "^4.16.4"
-  }
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-google-maps": "^9.4.5",
+    "react-scripts": "2.1.8",
+    "recompose": "^0.30.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

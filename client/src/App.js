@@ -1,28 +1,32 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import ShoppingMap from './components/ShoppingMap/ShoppingMap'
+import Search from './components/Search/Search'
+import ResultsList from './components/ResultsList/ResultsList'
 
-class App extends Component {
-  render() {
+const App = () => {
+    const [term, setTerm] = useState('')
+    const [results, setResults] = useState([])
+
+    const onSearch = searchTerm => {
+        setTerm(searchTerm)
+
+        //do api callout here
+
+        //mock data
+        setResults([
+            {name: 'Xbox One', price: 299.00, lat: 40.2087106, lng: -76.8707534},
+            {name: 'Xbox One S', price: 399.00, lat: 40.2087106, lng: -76.8707534}
+        ])
+    }
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+        <>
+            {!term && <Search search={onSearch} center={true} />}
+            {term && <ResultsList results={results} term={term} onSearch={onSearch} />}
+            {term && <ShoppingMap isMarkerShown={true} searchTerm={term} />}
+        </>
+    )
 }
 
 export default App;
