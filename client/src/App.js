@@ -3,6 +3,7 @@ import './App.css';
 import ShoppingMap from './components/ShoppingMap/ShoppingMap'
 import Search from './components/Search/Search'
 import ResultsList from './components/ResultsList/ResultsList'
+import {search} from './Api'
 
 const App = () => {
     const [term, setTerm] = useState('')
@@ -12,12 +13,15 @@ const App = () => {
         setTerm(searchTerm)
 
         //do api callout here
-
+        search(searchTerm).then(items => {
+            items = items || [];
+            setResults(items);
+        })
         //mock data
-        setResults([
-            {name: 'Xbox One', price: 299.00, lat: 40.2087106, lng: -76.8707534},
-            {name: 'Xbox One S', price: 399.00, lat: 40.2087106, lng: -76.8707534}
-        ])
+        // setResults([
+        //     {name: 'Xbox One', price: 299.00, lat: 40.2087106, lng: -76.8707534},
+        //     {name: 'Xbox One S', price: 399.00, lat: 40.2087106, lng: -76.8707534}
+        // ])
     }
 
     return (
