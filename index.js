@@ -14,11 +14,8 @@ if (process.env.NODE_ENV === 'PROD') {
     app.get('/', (req, res) => {
         res.sendfile(path.join(__dirname = 'react/index.html'));
     })
-} 
+}
 
-app.get('/', (req, res) => {
-    res.send('test', 200);
-})
 app.get('/foo', (req, res) => {
     res.send('hello world', 200);
 })
