@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'PROD') {
     app.get('/', (req, res) => {
         res.sendfile(path.join(__dirname = 'react/index.html'));
     })
-} 
+}
 
 //i guess we should break these out into api methods, but this is prototyping, mirite
 app.get('/search', (req, res) => {
