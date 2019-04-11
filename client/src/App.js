@@ -13,10 +13,33 @@ const App = () => {
         setTerm(searchTerm)
 
         //do api callout here
-        search(searchTerm).then(items => {
-            items = items || [];
-            setResults(items);
+        search(searchTerm).then(response => {
+            const items = response.items || [];
+            const stores = response.stores || [];
+            let itemsInStore = response.itemsInStore.filter(i => i.inStore != null) || [];
+            
+            const result = {};
+            //construct a data object that will store all items per store
+            stores.forEach(store => {
+                result[store.no] = result[store.no] || {};
+                result[store.no]['items'] = itemsInStore
+                    .filter(i => i.inStore.storeId === store.no)
+                    .map(i => {
+                        const item = items.find(item => item.upc === i.common.productId.upca)
+                        return {
+                            ...item,
+                            price: i.inStore.price.priceInCents,
+                            quantity: i.inStore.inventory.quantity,
+                            available: i.inStore.inventory.available
+                        }
+                    })
+                    
+                result[store.no]['store'] = store;
+            })
+
+            setResults(result);
         })
+        
         //mock data
         // setResults([
         //     {name: 'Xbox One', price: 299.00, lat: 40.2087106, lng: -76.8707534},
@@ -28,7 +51,7 @@ const App = () => {
         <>
             {!term && <Search search={onSearch} center={true} />}
             {term && <ResultsList results={results} term={term} onSearch={onSearch} />}
-            {term && <ShoppingMap isMarkerShown={true} searchTerm={term} />}
+            {term && <ShoppingMap data={results} searchTerm={term} />}
         </>
     )
 }

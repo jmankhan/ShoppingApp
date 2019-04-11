@@ -4,13 +4,17 @@ import Search from '../Search/Search'
 
 const ResultsList = (props) => {
     return (
-        <ul class="list">
+        <ul className="list">
             <Search search={props.onSearch} defaultValue={props.term} />
-            {props.results.map(result => {
-                return <li>
-                    <p>{result.name}</p>
-                    <p>{result.price}</p>
-                </li>
+            {Object.keys(props.results).map(storeId => {
+                return props.results[storeId].items.map(item => {
+                    return <li>
+                        <p>{item.name}</p>
+                        <p>{item.description.substring(0, 100)}</p>
+                        <p>{item.price}</p>
+                        <p>Available at: {props.results[storeId].store.name}</p>
+                    </li>
+                })
             })}
         </ul>
     )

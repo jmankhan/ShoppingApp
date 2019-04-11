@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
@@ -11,12 +11,22 @@ const ShoppingMap = compose(
   }),
   withScriptjs,
   withGoogleMap
-)((props) =>
-  <GoogleMap
-    defaultZoom={12}
-    defaultCenter={{ lat: 40.2087954, lng: -76.7394235 }}>
-        {props.isMarkerShown && <Marker position={{ lat: 40.2087954, lng: -76.7394235 }} onClick={props.onMarkerClick} />}
-  </GoogleMap>
+)((props) => {
+        useEffect(() => {
+            if(props.data) {
+                //fit bounds here
+            }
+        }, [props])
+        return <GoogleMap
+            defaultZoom={12}
+            defaultCenter={{ lat: 40.2087954, lng: -76.7394235 }}>
+                {props.data && Object.keys(props.data).map(storeId => {
+                        const coords = props.data[storeId].store.coordinates;
+                        return <Marker position={{ lat: coords[1], lng: coords[0] }} onClick={props.onMarkerClick} />
+                    })
+                }
+        </GoogleMap>
+    }
 )
 
 export default ShoppingMap;
