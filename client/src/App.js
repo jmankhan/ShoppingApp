@@ -60,6 +60,7 @@ const App = () => {
                     </Typography>
                 </Toolbar>
             </AppBar>
+
             {!term && <Search search={onSearch} center={true}/>}
             {term && <ResultsList results={results} term={term} onSearch={onSearch}/>}
             {term && <ShoppingMap data={results} searchTerm={term}/>}
