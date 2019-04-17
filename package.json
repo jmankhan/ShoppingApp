@@ -20,6 +20,7 @@
   "homepage": "https://github.com/jmankhan/ShoppingApp#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-cache-adapter": "^2.3.0",
     "body-parser": "^1.18.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
