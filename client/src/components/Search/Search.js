@@ -19,11 +19,23 @@ const Search = (props) => {
 
     return (
         <form className={props.center ? "searchContainer" : ""} onSubmit={handleForm}>
-            <FormControl style={{width: 500}}>
+            <FormControl style={{width: 400}}>
                 <InputLabel
                     htmlFor="custom-css-standard-input"
                 >
                     Search
+                </InputLabel>
+                <Input
+                    id="custom-css-standard-input"
+                    onChange={handleInput}
+                />
+            </FormControl>
+            <p style={{width:50}}/>
+            <FormControl style={{width: 400}}>
+                <InputLabel
+                    htmlFor="custom-css-standard-input"
+                >
+                    ZipCode
                 </InputLabel>
                 <Input
                     id="custom-css-standard-input"
