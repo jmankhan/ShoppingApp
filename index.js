@@ -2,10 +2,18 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const cacheAdapter = require('axios-cache-adapter');
+
 require('dotenv').config();
 
 const app = express();
 const PORT = 3001;
+const cache = cacheAdapter.setupCache({
+    maxAge: 24 * 60 * 60 * 1000
+});
+const api  = axios.create({
+    adapter: cache.adapter
+})
 
 app.use(bodyParser.json());
 //production mode
@@ -20,14 +28,16 @@ if (process.env.NODE_ENV === 'PROD') {
 app.get('/search', (req, res) => {
     const key = process.env.WALMART_API_KEY;
     const search_term = req.query.search_term;
+    const zipcode = req.query.zipcode;
+
     let stores;
-    axios.get(`http://api.walmartlabs.com/v1/stores?format=json&zip=17057&apiKey=${key}`)
+    api.get(`http://api.walmartlabs.com/v1/stores?format=json&zip=${zipcode}&apiKey=${key}`)
         .then(response => {
             stores = response.data.slice(0, 5);
             return response;
         })
         .then(() => {
-            return axios.get(`http://api.walmartlabs.com/v1/search?query=${search_term}&format=json&apiKey=${key}`)
+            return api.get(`http://api.walmartlabs.com/v1/search?query=${search_term}&format=json&apiKey=${key}`)
         })
         .then(response => {
             if (!response.data.numItems) {
@@ -55,7 +65,7 @@ app.get('/search', (req, res) => {
                 })
             });
 
-            axios.all(urls.map(url => axios.get(url)))
+            axios.all(urls.map(url => api.get(url)))
                 .then(results => {
                     results = results.map(result => result.data.data);
                     const response = {

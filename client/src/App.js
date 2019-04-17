@@ -12,11 +12,11 @@ const App = () => {
     const [term, setTerm] = useState('');
     const [results, setResults] = useState([]);
 
-    const onSearch = searchTerm => {
+    const onSearch = (searchTerm, zipcode) => {
         setTerm(searchTerm);
-
+        
         //do api callout here
-        search(searchTerm).then(response => {
+        search(searchTerm, zipcode).then(response => {
             const items = response.items || [];
             const stores = response.stores || [];
             let itemsInStore = response.itemsInStore.filter(i => i.inStore != null) || [];
@@ -29,11 +29,20 @@ const App = () => {
                     .filter(i => i.inStore.storeId === store.no)
                     .map(i => {
                         const item = items.find(item => item.upc === i.common.productId.upca);
-                        return {
-                            ...item,
-                            price: i.inStore.price.priceInCents,
-                            quantity: i.inStore.inventory.quantity,
-                            available: i.inStore.inventory.available
+                        if(i.inStore && i.inStore.inventory && i.inStore.price) {
+                            return {
+                                ...item,
+                                price: i.inStore.price.priceInCents,
+                                quantity: i.inStore.inventory.quantity,
+                                available: i.inStore.inventory.available
+                            }
+                        } else {
+                            return {
+                                ...item,
+                                price: 'N/A',
+                                quantity: 'N/A',
+                                available: 'N/A/'
+                            }
                         }
                     });
 

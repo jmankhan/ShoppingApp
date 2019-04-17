@@ -6,15 +6,19 @@ import Input from "@material-ui/core/Input";
 
 const Search = (props) => {
     const [term, setTerm] = useState('');
+    const [zipcode, setZipcode] = useState('');
 
     const handleInput = e => {
         setTerm(e.target.value);
     };
 
+    const handleZipcode = e => {
+        setZipcode(e.target.value);
+    }
+
     const handleForm = e => {
         e.preventDefault();
-        props.search(term);
-        console.log(term);
+        props.search(term, zipcode);
     };
 
     return (
@@ -39,9 +43,10 @@ const Search = (props) => {
                 </InputLabel>
                 <Input
                     id="custom-css-standard-input"
-                    onChange={handleInput}
+                    onChange={handleZipcode}
                 />
             </FormControl>
+            <button type="submit" style={{display: 'none'}}>Submit</button>
         </form>
     )
 };

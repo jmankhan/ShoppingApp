@@ -3,6 +3,11 @@ import './ResultsList.css'
 import Search from '../Search/Search'
 
 const ResultsList = (props) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+      
     return (
         <div className="list">
             <div className="listInner">
@@ -13,6 +18,10 @@ const ResultsList = (props) => {
                             return (
                                 <div className="resultsPaper">
                                     <img src={item.thumbnail} alt=""/>
+                                    <p>Item: {item.name}</p>
+                                    <p>Price: {item.price === 'N/A' ? 'N/A' : formatter.format(item.price/100)}</p>
+                                    <p>Quantity: {item.quantity}</p>
+                                    <p>Available at: {props.results[storeId].store.name}</p>
                                 </div>
                             )
                         }
